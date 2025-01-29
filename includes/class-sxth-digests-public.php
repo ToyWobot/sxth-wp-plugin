@@ -21,9 +21,15 @@ class SXTH_Digests_Public
       global $post;
 
       if ($post->post_type === 'sxth_digest') {
-         $plugin_path = SXTH_DIGESTS_PLUGIN_DIR . 'templates/single-sxth_digest.php';
-         if (file_exists($plugin_path)) {
-            return $plugin_path;
+         // Check theme directory first
+         $theme_template = locate_template(array('single-sxth_digest.php'));
+
+         if (!$theme_template) {
+            // Use plugin template as fallback
+            $plugin_template = SXTH_DIGESTS_PLUGIN_DIR . 'templates/single-sxth_digest.php';
+            if (file_exists($plugin_template)) {
+               return $plugin_template;
+            }
          }
       }
 

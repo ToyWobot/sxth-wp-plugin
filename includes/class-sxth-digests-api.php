@@ -29,9 +29,9 @@ class SXTH_Digests_API
    {
       // Validate API key
       $api_key = $request->get_header('X-API-Key');
-      $stored_key = get_option('sxth_digests_api_key');
+      $stored_key = get_option('sxth_digests_auth_token');
 
-      return true;
+      return $api_key === $stored_key;
    }
 
    public function create_digest_post($request)
@@ -41,7 +41,7 @@ class SXTH_Digests_API
       // Validate and sanitize input
       $post_data = array(
          'post_title' => sanitize_text_field($params['title']),
-         'post_content' => wp_kses_post($params['content']),
+         'post_content' => array($params['content']),
          'post_type' => 'sxth_digest',
          'post_status' => 'publish',
       );

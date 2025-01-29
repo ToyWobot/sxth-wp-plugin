@@ -19,6 +19,7 @@ define('SXTH_DIGESTS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 // Load core classes
 require_once SXTH_DIGESTS_PLUGIN_DIR . 'includes/class-sxth-digests-core.php';
+require_once SXTH_DIGESTS_PLUGIN_DIR . 'includes/class-sxth-digests-auth.php';
 require_once SXTH_DIGESTS_PLUGIN_DIR . 'includes/class-sxth-digests-api.php';
 require_once SXTH_DIGESTS_PLUGIN_DIR . 'includes/class-sxth-digests-admin.php';
 require_once SXTH_DIGESTS_PLUGIN_DIR . 'includes/class-sxth-digests-public.php';
@@ -27,10 +28,11 @@ require_once SXTH_DIGESTS_PLUGIN_DIR . 'includes/class-sxth-digests-public.php';
 register_activation_hook(__FILE__, array('SXTH_Digests_Core', 'activate'));
 register_deactivation_hook(__FILE__, array('SXTH_Digests_Core', 'deactivate'));
 
-add_action('plugins_loaded', 'sxth_digests_init');
 
+add_action('plugins_loaded', 'sxth_digests_init');
 function sxth_digests_init()
 {
+   SXTH_Digests_Auth::get_instance();
    SXTH_Digests_Core::get_instance();
    SXTH_Digests_API::get_instance();
    SXTH_Digests_Admin::get_instance();

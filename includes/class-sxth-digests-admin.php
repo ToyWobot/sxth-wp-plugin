@@ -5,6 +5,9 @@ class SXTH_Digests_Admin
 
    private function __construct()
    {
+      // $auth = SXTH_Digests_Auth::get_instance();
+      // $auth->check_authentication();
+
       add_action('admin_menu', array($this, 'add_settings_page'));
       add_action('admin_init', array($this, 'register_settings'));
    }
@@ -20,8 +23,8 @@ class SXTH_Digests_Admin
    public function add_settings_page()
    {
       add_options_page(
-         __('SXTH Digests Settings', 'sxth-digests'),
-         __('SXTH Digests', 'sxth-digests'),
+         __('SXTH Settings', 'sxth-settings'),
+         __('SXTH Settings', 'sxth-settings'),
          'manage_options',
          'sxth-digests',
          array($this, 'render_settings_page')
@@ -30,7 +33,7 @@ class SXTH_Digests_Admin
 
    public function register_settings()
    {
-      register_setting('sxth_digests_options', 'sxth_digests_api_key');
+      register_setting('sxth_digests_options', 'sxth_digests_auth_token');
    }
 
    public function render_settings_page()
@@ -48,7 +51,7 @@ class SXTH_Digests_Admin
                   <th scope="row"><?php _e('API Key', 'sxth-digests'); ?></th>
                   <td>
                      <input type="text" name="sxth_digests_api_key"
-                        value="<?php echo esc_attr(get_option('sxth_digests_api_key')); ?>" class="regular-text" />
+                        value="<?php echo get_option("sxth_digests_auth_token"); ?>" class="regular-text" />
                      <p class="description"><?php _e('Use this key for API authentication', 'sxth-digests'); ?></p>
                   </td>
                </tr>
