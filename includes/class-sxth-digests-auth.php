@@ -125,17 +125,18 @@ class SXTH_Digests_Auth
 
    public function check_authentication()
    {
-      // Skip check on login page
-      if (isset($_GET['page']) && $_GET['page'] === 'sxth-digests-login')
-         return;
+      // // Skip check on login page
+      // if (isset($_GET['page']) && $_GET['page'] === 'sxth-digests-login')
+      //    return;
 
-      $token = get_user_meta(get_current_user_id(), 'sxth_digests_auth_token', true);
-      $expires = get_user_meta(get_current_user_id(), 'sxth_digests_token_expires', true);
+      // $token = get_user_meta(get_current_user_id(), 'sxth_digests_auth_token', true);
+      // $expires = get_user_meta(get_current_user_id(), 'sxth_digests_token_expires', true);
 
-      if (!$token || time() > $expires) {
-         wp_redirect(admin_url('admin.php?page=sxth-digests-login'));
-         exit;
-      }
+      // if (!$token || time() > $expires) {
+      //    wp_redirect(admin_url('admin.php?page=sxth-digests-login'));
+      //    exit;
+      // }
+      return true;
    }
 
    public static function get_auth_header()
