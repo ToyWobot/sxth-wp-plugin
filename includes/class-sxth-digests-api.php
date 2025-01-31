@@ -41,7 +41,7 @@ class SXTH_Digests_API
       // Validate and sanitize input
       $post_data = array(
          'post_title' => sanitize_text_field($params['title']),
-         'post_content' => array($params['content']),
+         'post_content' => json_encode($params['content']),
          'post_type' => 'sxth_digest',
          'post_status' => 'publish',
       );
