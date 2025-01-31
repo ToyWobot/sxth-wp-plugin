@@ -18,7 +18,7 @@ while (have_posts()) : the_post(); ?>
             <?php
             $co = $array = json_decode(stripslashes(get_the_content()), true);
 
-            print_r($co[0]);
+            print_r($co);
             ?>  
         </div>
 
