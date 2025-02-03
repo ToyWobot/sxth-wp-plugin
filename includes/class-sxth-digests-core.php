@@ -19,21 +19,21 @@ class SXTH_Digests_Core
 
    public function register_digest_post_type()
    {
-      $labels = array(
-         'name' => __('Digests', 'sxth-digests'),
-         'singular_name' => __('Digest', 'sxth-digests'),
-      );
+      // $labels = array(
+      //    'name' => __('Digests', 'sxth-digests'),
+      //    'singular_name' => __('Digest', 'sxth-digests'),
+      // );
 
-      $args = array(
-         'labels' => $labels,
-         'public' => true,
-         'has_archive' => true,
-         'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
-         'show_in_rest' => true,
-         'menu_icon' => 'dashicons-media-document',
-      );
+      // $args = array(
+      //    'labels' => $labels,
+      //    'public' => true,
+      //    'has_archive' => true,
+      //    'supports' => array('title', 'editor', 'thumbnail', 'excerpt'),
+      //    'show_in_rest' => true,
+      //    'menu_icon' => 'dashicons-media-document',
+      // );
 
-      register_post_type('sxth_digest', $args);
+      // register_post_type('sxth_digest', $args);
    }
 
    public static function activate()
