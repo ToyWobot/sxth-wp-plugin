@@ -91,11 +91,7 @@ class SXTH_Digests_API
          $sections_total = count($sections);
          foreach ($sections as $section_key => $section_value) {
             $sections_count = $sections_count + 1;
-
-            if ($sections_count === 1) {
-               $pre_content .= "<div style='margin-bottom: 5rem'>";
-            }
-
+            $pre_content .= "<div style='margin-bottom: 5rem'>";
             // summary
             $section = $section_value;
             $summary = $section_value["summary"];
@@ -123,8 +119,6 @@ class SXTH_Digests_API
                   $pre_content .= "</div>";
                }
             }
-
-
             // why it's matter
             $why_matters = $content["why_matters"];
             $why_matters_count = 0;
@@ -149,6 +143,7 @@ class SXTH_Digests_API
                      $focus_keys_count = $focus_keys_count + 1;
                      if ($focus_keys_count === 1) {
                         $pre_content .= "<h3 style='font-weight: bold'>Key Areas Of Focus</h3>";
+                        $pre_content .= "<ul>";
                      }
 
                      $pre_content .= "<li>" . $focus_value["focusArea"] . "</li>";
@@ -163,11 +158,7 @@ class SXTH_Digests_API
                   }
                }
             }
-
-
-            if ($sections_count === $sections_total) {
-               $pre_content .= "</div>";
-            }
+             $pre_content .= "</div>";
          }
 
          if ($sections_array_total === $sections_array_count) {
