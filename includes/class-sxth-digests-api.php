@@ -21,7 +21,22 @@ class SXTH_Digests_API
       register_rest_route('sxth-digests/v1', '/create', array(
          'methods' => 'POST',
          'callback' => array($this, 'create_digest_post'),
-         'permission_callback' => array($this, 'api_permissions_check'),
+         'permission_callback' => function ($request) {
+            if ($this->api_permissions_check($request)) {
+               return true;
+            } else {
+               // Get client API key
+               $api_key = $request->get_header('X-API-Key');
+               // Get Client IP
+               $client_ip = $_SERVER['REMOTE_ADDR'];
+
+               return new WP_Error(
+                  'rest_forbidden',
+                  __("Please check your api key or ip. Your ip is $client_ip and key is $api_key"),
+                  array('status' => rest_authorization_required_code())
+               );
+            }
+         },
       ));
    }
 
@@ -31,7 +46,23 @@ class SXTH_Digests_API
       $api_key = $request->get_header('X-API-Key');
       $stored_key = esc_attr(get_option('sxth_digests_api_key'));
 
-      return $api_key === $stored_key;
+      // Get Client IP
+      $client_ip = $_SERVER['REMOTE_ADDR'];
+
+      // Get Allowed IPs
+      $allowed_ips = explode(', ', get_option('sxth_digests_allowed_ips'));
+      $allowed_ips = array_map('trim', $allowed_ips);
+
+      // Validate
+      if ($api_key !== $stored_key) {
+         return false;
+      }
+
+      if (!empty($allowed_ips) && !in_array($client_ip, $allowed_ips)) {
+         return false;
+      }
+      
+      return true;
    }
 
    public function create_digest_post($request)
