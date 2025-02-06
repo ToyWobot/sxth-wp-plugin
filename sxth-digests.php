@@ -9,7 +9,7 @@
 
 // Security check
 if (!defined('ABSPATH')) {
-   exit;
+    exit;
 }
 
 // Define plugin constants
@@ -29,12 +29,35 @@ register_activation_hook(__FILE__, array('SXTH_Digests_Core', 'activate'));
 register_deactivation_hook(__FILE__, array('SXTH_Digests_Core', 'deactivate'));
 
 
-add_action('plugins_loaded', 'sxth_digests_init');
+// allow cross origiin
+function add_cors_headers()
+{
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE");
+    header("Access-Control-Allow-Headers: Content-Type, X-API-Key"); // Both cases
+    header("Access-Control-Allow-Credentials: true");
+    header("Vary: Origin");
+
+    // Handle OPTIONS preflight
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        status_header(200);
+        exit();
+    }
+}
+add_filter('rest_pre_dispatch', function ($result, $server, $request) {
+    $route = $request->get_route();
+    if (strpos($route, '/sxth-digests/') === 0) {
+        add_cors_headers();
+    }
+    return $result;
+}, 10, 3);
+
 function sxth_digests_init()
 {
-   SXTH_Digests_Auth::get_instance();
-   SXTH_Digests_Core::get_instance();
-   SXTH_Digests_API::get_instance();
-   SXTH_Digests_Admin::get_instance();
-   SXTH_Digests_Public::get_instance();
+    SXTH_Digests_Auth::get_instance();
+    SXTH_Digests_Core::get_instance();
+    SXTH_Digests_API::get_instance();
+    SXTH_Digests_Admin::get_instance();
+    SXTH_Digests_Public::get_instance();
 }
+add_action('plugins_loaded', 'sxth_digests_init');

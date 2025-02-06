@@ -61,7 +61,7 @@ class SXTH_Digests_API
       if (!empty($allowed_ips) && !in_array($client_ip, $allowed_ips)) {
          return false;
       }
-      
+
       return true;
    }
 
@@ -127,7 +127,7 @@ class SXTH_Digests_API
                if ($why_matters_value["article_id"] === $section["id"]) {
                   $why_matters_count = $why_matters_count + 1;
 
-                  if($why_matters_count === 1){
+                  if ($why_matters_count === 1) {
                      $pre_content .= "<div style='margin-bottom: 4rem'>";
                   }
 
@@ -158,7 +158,7 @@ class SXTH_Digests_API
                   }
                }
             }
-             $pre_content .= "</div>";
+            $pre_content .= "</div>";
          }
 
          if ($sections_array_total === $sections_array_count) {
@@ -179,7 +179,8 @@ class SXTH_Digests_API
 
       return new WP_REST_Response(array(
          'id' => $post_id,
-         'message' => __('Digest created successfully', 'sxth-digests')
+         'message' => __('Digest created successfully'),
+         "status" => 200,
       ), 200);
    }
 }
