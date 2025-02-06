@@ -61,3 +61,16 @@ function sxth_digests_init()
     SXTH_Digests_Public::get_instance();
 }
 add_action('plugins_loaded', 'sxth_digests_init');
+
+// redirect to settings page on active
+register_activation_hook(__FILE__, function () {
+    add_option('sxth_digests_do_activation_redirect', true);
+});
+
+add_action('admin_init', function () {
+    if (get_option('sxth_digests_do_activation_redirect', false)) {
+        delete_option('sxth_digests_do_activation_redirect');
+        wp_safe_redirect(admin_url('options-general.php?page=sxth-digests'));
+        exit;
+    }
+});
