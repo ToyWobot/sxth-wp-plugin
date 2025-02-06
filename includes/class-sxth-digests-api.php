@@ -32,7 +32,7 @@ class SXTH_Digests_API
 
                return new WP_Error(
                   'rest_forbidden',
-                  __("Please check your api key or ip. Your ip is $client_ip and key is $api_key"),
+                  __("Sorry! Your IP $client_ip or API key $api_key is not allowed."),
                   array('status' => rest_authorization_required_code())
                );
             }
