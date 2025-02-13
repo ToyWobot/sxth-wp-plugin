@@ -26,6 +26,7 @@ require_once SXTH_DIGESTS_PLUGIN_DIR . 'includes/class-sxth-digests-public.php';
 
 // Initialize the plugin
 register_activation_hook(__FILE__, array('SXTH_Digests_Core', 'activate'));
+
 register_deactivation_hook(__FILE__, array('SXTH_Digests_Core', 'deactivate'));
 
 

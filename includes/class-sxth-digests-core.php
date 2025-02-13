@@ -40,6 +40,26 @@ class SXTH_Digests_Core
    {
       // Activation code here
       flush_rewrite_rules();
+
+      // Get first admin user ID
+      $admins = get_users([
+         'role' => 'administrator',
+         'number' => 1,
+         'fields' => 'ID'
+      ]);
+      $admin_id = !empty($admins) ? $admins[0] : 1;
+
+      // Switch user context
+      $original_user = wp_get_current_user();
+      wp_set_current_user($admin_id);
+
+      // Create category if needed
+      if (!term_exists('Digests', 'category')) {
+         wp_create_category('Digests');
+      }
+
+      // Restore original user
+      wp_set_current_user($original_user->ID);
    }
 
    public static function deactivate()
